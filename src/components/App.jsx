@@ -10,14 +10,20 @@ export default function App () {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  const state = [good, neutral, bad];
+  const state = { good, neutral, bad };
 
  const onLeaveFeedback = (e) => {
-    const BtnClickTarget = e.target.textContent.toLowerCase();
-   //Подивитися на це ще раз і переробити - знайти рішення
-  setGood(prevState => 
-      prevState[BtnClickTarget] + 1
-    )
+   const BtnClickTarget = e.target.textContent.toLowerCase();
+   switch (BtnClickTarget) {
+     case "good":
+       return setGood((prev) => prev + 1);
+     case "neutral":
+       return setNeutral((prev) => prev + 1);
+     case "bad":
+       return setBad((prev) => prev + 1);
+     default:
+       return
+   }
   }
 
    const countTotalFeedback = () => {
@@ -51,48 +57,5 @@ export default function App () {
   )
 }
 
-// class App extends Component {
-//   state = {
-//     good: 0,
-//     neutral: 0,
-//     bad: 0
-//   }
-
-//   onLeaveFeedback = (e) => {
-//     const BtnClickTarget = e.target.textContent.toLowerCase();
-//     this.setState(prevState => ({
-//       [BtnClickTarget]: prevState[BtnClickTarget] + 1,
-//     }))
-//   }
-
-//   countTotalFeedback() {
-//     return Object.values(this.state).reduce((total, item) => total + item, 0);
-//   };
-  
-//   countPositiveFeedbackPercentage() {
-//     return Math.ceil(((this.state.good) / (this.state.good + this.state.neutral + this.state.bad)) * 100);
-    
-//   }
-
-//   render() {
-//     const { good, neutral, bad } = this.state;
-//     const total = this.countTotalFeedback();
-
-//     return (
-//       <Container>
-
-//       <Section title={'Please leave feedback'}>
-//         <FeedbackOptions options={Object.keys(this.state)} onLeaveFeedback={this.onLeaveFeedback} />
-//         </Section>
-        
-//         <Section title={'Statistics'}>
-//           {total === 0 ? <Notification message="There is no feedback" /> :  <Statistics good={good} neutral={neutral} bad={bad} total={this.countTotalFeedback()} positivePercentage={this.countPositiveFeedbackPercentage()} />} 
-//         </Section>
-
-//         </Container>
-      
-//     )
-//   }
-// }
 
 
